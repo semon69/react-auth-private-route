@@ -2,16 +2,29 @@ import React, { useContext } from 'react';
 import { AuthContext } from './providers/AuthProvider';
 
 const Login = () => {
-    const {signIn} = useContext(AuthContext);
+    const { signIn, googleSignIn } = useContext(AuthContext);
     const handleLoginSubmit = (event) => {
         event.preventDefault()
 
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
+        
         console.log(email, password)
 
         signIn(email, password)
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser)
+                form.reset()
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        
+    }
+    const handleGoogleSignIn = () => {
+        googleSignIn()
         .then(result => {
             const loggedUser = result.user;
             console.log(loggedUser)
@@ -42,6 +55,9 @@ const Login = () => {
                                 <input type="password" name='password' placeholder="password" className="input input-bordered" />
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                                </label>
+                                <label className="label">
+                                    <a onClick={handleGoogleSignIn} href="#" className="label-text-alt link link-hover">Sign in with Google</a>
                                 </label>
                             </div>
                             <div className="form-control mt-6">

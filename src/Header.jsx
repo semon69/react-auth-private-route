@@ -17,6 +17,7 @@ const Header = () => {
                 <a className="btn btn-ghost normal-case text-xl">Auth Test</a>
                 <Link className="btn btn-ghost normal-case text-xl" to="/">Home</Link>
                 <Link className="btn btn-ghost normal-case text-xl" to="/login">Login</Link>
+                <Link className="btn btn-ghost normal-case text-xl" to="/order">Order</Link>
                 <Link className="btn btn-ghost normal-case text-xl" to="/register">Register</Link>
                 {
                     user ? 
@@ -25,7 +26,8 @@ const Header = () => {
                     <button onClick={handleLogOut} className="btn btn-xs ml-2">Sign Out</button>
                     </>
                     : 
-                    <Link className="btn btn-sm normal-case text-xl" to="/login">Login</Link>
+                    // <Link className="btn btn-sm normal-case text-xl" to="/login">Login</Link>
+                    ""
                 }
             </div>
         </div>

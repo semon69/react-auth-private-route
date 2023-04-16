@@ -51,7 +51,7 @@ const Register = () => {
                                 <input type="password" name="password" placeholder="password" className="input input-bordered" required/>
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">You Have an Account? <Link to="/login">Login</Link></a>
-                                </label>
+                                </label>                              
                             </div>
                             <div className="form-control mt-6">
                                 <button className="btn btn-primary">Register</button>
