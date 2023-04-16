@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from './providers/AuthProvider';
 
 const Register = () => {
-    const {user, createUser} = useContext(AuthContext)
+    const { user, createUser, updateUser, setUser } = useContext(AuthContext)
 
     const handleRegisterSubmit = (event) => {
         event.preventDefault()
@@ -12,23 +12,38 @@ const Register = () => {
         const email = form.email.value;
         const name = form.name.value;
         const password = form.password.value;
-        form.reset()
+        if (!/^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/.test(password)) {
+            return alert('Your password is not strong');
+        }
+
         createUser(email, password)
-        .then(result => {
-            const loggedUser = result.user;
-            console.log(loggedUser)
-        })
-        .catch(error => {
-            console.log(error)
-        })
+            .then(result => {
+                const loggedUser = result.user;
+                // console.log(loggedUser)
+                form.reset()
+                updateUser(name)
+                    .then(() => {
+                        // const loggedUser = result.user;
+                        setUser({...loggedUser, displayName: name})
+                        // console.log(result)
+                    })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+        // .catch(error => {
+        //     console.log(error)
+        // })
     }
+    console.log(user)
     return (
         <div>
             <div className="hero min-h-screen bg-base-200">
                 <div className="hero-content flex-col">
                     <div className="text-center">
                         <h1 className="text-5xl font-bold">Register</h1>
-                        
+
                     </div>
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                         <form onSubmit={handleRegisterSubmit} className="card-body">
@@ -36,22 +51,22 @@ const Register = () => {
                                 <label className="label">
                                     <span className="label-text">Name</span>
                                 </label>
-                                <input type="text" name='name' placeholder="name" className="input input-bordered" required/>
+                                <input type="text" name='name' placeholder="name" className="input input-bordered" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input type="email" name='email' placeholder="email" className="input input-bordered" required/>
+                                <input type="email" name='email' placeholder="email" className="input input-bordered" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input type="password" name="password" placeholder="password" className="input input-bordered" required/>
+                                <input type="password" name="password" placeholder="password" className="input input-bordered" required />
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">You Have an Account? <Link to="/login">Login</Link></a>
-                                </label>                              
+                                </label>
                             </div>
                             <div className="form-control mt-6">
                                 <button className="btn btn-primary">Register</button>
